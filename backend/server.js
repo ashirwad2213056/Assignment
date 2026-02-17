@@ -79,8 +79,15 @@ app.use((req, res) => {
 });
 
 // Start server
+// Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server is running on port ${PORT}`);
-    console.log(`📡 API available at http://localhost:${PORT}/api`);
-});
+
+// Only listen if the file is being executed directly (not when imported for Vercel)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server is running on port ${PORT}`);
+        console.log(`📡 API available at http://localhost:${PORT}/api`);
+    });
+}
+
+module.exports = app;

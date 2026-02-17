@@ -219,3 +219,20 @@ Frontend will run on `http://localhost:3000`
 ## 📄 License
 
 This project is licensed under the ISC License.
+
+## 🚀 Deployment on Vercel
+
+The project is configured for easy deployment on [Vercel](https://vercel.com).
+
+1.  **Push to GitHub**: Ensure your latest code is on GitHub.
+2.  **Import Project**: Go to Vercel Dashboard -> Add New -> Project -> Import from GitHub.
+3.  **Configure Project**:
+    *   **Framework Preset**: Vite (should be auto-detected).
+    *   **Root Directory**: `./` (default).
+    *   **Environment Variables**: Add the following (copy values from your `backend/.env`):
+        *   `MONGODB_URI`: Your MongoDB connection string.
+        *   `JWT_SECRET`: Your secret key.
+        *   `NODE_ENV`: `production`
+4.  **Deploy**: Click Deploy.
+
+The `vercel.json` file automatically configures the backend as a serverless function available at `/api/...`.
