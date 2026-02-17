@@ -1,0 +1,30 @@
+Event_Management_Application/
+├── backend/
+│   ├── models/
+│   │   ├── Event.js
+│   │   └── User.js
+│   ├── routes/
+│   │   ├── eventRoutes.js
+│   │   └── userRoutes.js
+│   ├── .env
+│   ├── .env.example
+│   ├── .gitignore
+│   ├── package.json
+│   └── server.js
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── utils/
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── public/
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── vite.config.js
+└── README.md

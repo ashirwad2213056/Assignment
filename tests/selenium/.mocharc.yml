@@ -1,0 +1,3 @@
+timeout: 60000
+exit: true
+slow: 5000

@@ -1,0 +1,155 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                          QUICK FIX GUIDE                                    ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+## 🔧 ISSUES IDENTIFIED:
+
+1. ❌ Multiple Node processes running (port 5000 conflict)
+2. ❌ PostCSS cache issues
+3. ✅ MongoDB Atlas connection string updated
+4. ✅ Dependencies installed (bcryptjs, jsonwebtoken)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## ✅ SOLUTION: CLEAN START
+
+Follow these steps EXACTLY:
+
+### STEP 1: Stop All Node Processes
+```powershell
+# Kill all Node.js processes
+Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force
+```
+
+### STEP 2: Clear Vite Cache
+```powershell
+cd "C:\Users\techn\Desktop\CompanyAssignment\Event_Management_Application"
+Remove-Item -Path "node_modules/.vite" -Recurse -Force -ErrorAction SilentlyContinue
+```
+
+### STEP 3: Start Backend (Terminal 1)
+```powershell
+cd "C:\Users\techn\Desktop\CompanyAssignment\Event_Management_Application\backend"
+npm run dev
+```
+
+**Wait for this message:**
+```
+🚀 Server is running on port 5000
+📡 API available at http://localhost:5000/api
+✅ Connected to MongoDB successfully
+```
+
+**If you see MongoDB connection error**, it might be a DNS/network issue with Atlas.
+Wait 10-20 seconds for it to retry and connect.
+
+### STEP 4: Start Frontend (Terminal 2 - NEW TERMINAL)
+```powershell
+cd "C:\Users\techn\Desktop\CompanyAssignment\Event_Management_Application"
+npm run dev
+```
+
+**You should see:**
+```
+VITE v7.3.1  ready in XXX ms
+➜  Local:   http://localhost:3000/
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🧪 TEST THE SETUP
+
+Once both servers are running, test in a NEW PowerShell window:
+
+```powershell
+# Test 1: Health Check
+Invoke-RestMethod -Uri "http://localhost:5000/api/health"
+
+# Expected: {"status":"healthy","database":"connected","uptime":X.XX}
+```
+
+```powershell
+# Test 2: Register a User
+$body = @{
+    name = "Test User"
+    email = "test@example.com"
+    password = "password123"
+    role = "user"
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:5000/api/auth/register" `
+  -Method POST `
+  -Body $body `
+  -ContentType "application/json"
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## ⚠️ IF MONGODB ATLAS WON'T CONNECT
+
+If you see DNS errors or connection timeouts:
+
+### Option 1: Check Network Access
+1. Go to https://cloud.mongodb.com
+2. Click "Network Access" (left sidebar)
+3. Make sure your IP is whitelisted OR use 0.0.0.0/0 (allow all)
+
+### Option 2: Verify Connection String
+Open `backend/.env` and verify:
+```
+MONGODB_URI=mongodb+srv://ashirwad999999999_db_user:Kky730NgC62163nH@cluster0.lfdqgry.mongodb.net/event-management?retryWrites=true&w=majority&appName=Cluster0
+```
+
+### Option 3: Use Local MongoDB (Temporary)
+If Atlas still doesn't work, temporarily use local:
+```env
+MONGODB_URI=mongodb://localhost:27017/event-management
+```
+
+Then start local MongoDB:
+```powershell
+mongod
+# OR
+net start MongoDB
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 📋 VERIFICATION CHECKLIST
+
+Before considering it "working":
+
+Backend:
+☐ No "EADDRINUSE" port error
+☐ See "Server is running on port 5000"
+☐ See "Connected to MongoDB successfully"
+☐ Health endpoint returns database: "connected"
+
+Frontend:
+☐ No PostCSS errors
+☐ Vite starts successfully
+☐ Can access http://localhost:3000
+☐ Page loads without errors
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 🎯 CURRENT STATUS
+
+✅ Project files: All created and ready
+✅ Dependencies: Installed
+✅ MongoDB Atlas: Connection string configured
+✅ Authentication: Complete (Module 2)
+✅ PostCSS: Fixed (.cjs file created)
+
+⏳ Need to: Start servers cleanly (one at a time)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+## 💡 PRO TIP
+
+To avoid port conflicts in the future:
+- Always check if backend is running before starting another
+- Use Ctrl+C to properly stop servers
+- If stuck, use: `Get-Process -Name node | Stop-Process -Force`
+
+═══════════════════════════════════════════════════════════════════════════════

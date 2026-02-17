@@ -1,0 +1,30 @@
+{
+  "name": "selenium-tests",
+  "version": "1.0.0",
+  "description": "Selenium automated tests for Event Management Application",
+  "type": "commonjs",
+  "scripts": {
+    "test": "mocha --recursive specs/**/*.test.js --timeout 60000 --exit",
+    "test:home": "mocha specs/01_home.test.js --timeout 60000 --exit",
+    "test:auth": "mocha specs/02_auth.test.js --timeout 60000 --exit",
+    "test:dashboard": "mocha specs/03_dashboard.test.js --timeout 60000 --exit",
+    "test:profile": "mocha specs/04_profile.test.js --timeout 60000 --exit",
+    "test:products": "mocha specs/05_products.test.js --timeout 60000 --exit",
+    "test:cart": "mocha specs/06_cart_checkout.test.js --timeout 60000 --exit",
+    "test:orders": "mocha specs/07_orders.test.js --timeout 60000 --exit",
+    "test:vendor": "mocha specs/08_vendor.test.js --timeout 60000 --exit",
+    "test:admin": "mocha specs/09_admin.test.js --timeout 60000 --exit",
+    "test:navbar": "mocha specs/10_navbar.test.js --timeout 60000 --exit",
+    "test:headless": "cross-env TEST_HEADLESS=true mocha --recursive specs/**/*.test.js --timeout 60000 --exit",
+    "test:report": "mocha --recursive specs/**/*.test.js --timeout 60000 --exit --reporter mochawesome"
+  },
+  "dependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "selenium-webdriver": "^4.27.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "mochawesome": "^7.1.4"
+  }
+}
